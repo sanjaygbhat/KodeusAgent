@@ -23,7 +23,7 @@ async def chat(context: AgentContext):
     while True:
         # ask user for message
         with input_lock:
-            timeout = context.agent0.get_data("timeout") # how long the agent is willing to wait
+            timeout = context.kodeus.get_data("timeout") # how long the agent is willing to wait
             if not timeout: # if agent wants to wait for user input forever
                 PrintStyle(background_color="#6C3483", font_color="white", bold=True, padding=True).print(f"User message ('e' to leave):")        
                 if sys.platform != "win32": import readline # this fixes arrow keys in terminal
@@ -37,7 +37,7 @@ async def chat(context: AgentContext):
                 user_input = timeout_input("> ", timeout=timeout)
                                     
                 if not user_input:
-                    user_input = context.agent0.read_prompt("fw.msg_timeout.md")
+                    user_input = context.kodeus.read_prompt("fw.msg_timeout.md")
                     PrintStyle(font_color="white", padding=False).stream(f"{user_input}")        
                 else:
                     user_input = user_input.strip()
@@ -50,11 +50,11 @@ async def chat(context: AgentContext):
         # exit the conversation when the user types 'exit'
         if user_input.lower() == 'e': break
 
-        # send message to agent0, 
+        # send message to kodeus, 
         assistant_response = await context.communicate(UserMessage(user_input, [])).result()
         
-        # print agent0 response
-        PrintStyle(font_color="white",background_color="#1D8348", bold=True, padding=True).print(f"{context.agent0.agent_name}: reponse:")        
+        # print kodeus response
+        PrintStyle(font_color="white",background_color="#1D8348", bold=True, padding=True).print(f"{context.kodeus.agent_name}: reponse:")        
         PrintStyle(font_color="white").print(f"{assistant_response}")        
                         
 

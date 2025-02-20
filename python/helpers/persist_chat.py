@@ -82,7 +82,7 @@ def remove_chat(ctxid):
 def _serialize_context(context: AgentContext):
     # serialize agents
     agents = []
-    agent = context.agent0
+    agent = context.kodeus
     while agent:
         agents.append(_serialize_agent(agent))
         agent = agent.data.get(Agent.DATA_NAME_SUBORDINATE, None)
@@ -130,17 +130,17 @@ def _deserialize_context(data):
         name=data.get("name", None),
         log=log,
         paused=False,
-        # agent0=agent0,
+        # kodeus=kodeus,
         # streaming_agent=straming_agent,
     )
 
     agents = data.get("agents", [])
-    agent0 = _deserialize_agents(agents, config, context)
-    streaming_agent = agent0
+    kodeus = _deserialize_agents(agents, config, context)
+    streaming_agent = kodeus
     while streaming_agent.number != data.get("streaming_agent", 0):
         streaming_agent = streaming_agent.data.get(Agent.DATA_NAME_SUBORDINATE, None)
 
-    context.agent0 = agent0
+    context.kodeus = kodeus
     context.streaming_agent = streaming_agent
 
     return context

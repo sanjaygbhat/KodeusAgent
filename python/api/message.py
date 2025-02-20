@@ -57,7 +57,7 @@ class Message(ApiHandler):
         context = self.get_context(ctxid)
 
         # Store attachments in agent data
-        # context.agent0.set_data("attachments", attachment_paths)
+        # context.kodeus.set_data("attachments", attachment_paths)
 
         # Prepare attachment filenames for logging
         attachment_filenames = (

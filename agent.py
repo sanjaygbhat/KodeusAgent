@@ -20,6 +20,14 @@ from python.helpers.dirty_json import DirtyJson
 from python.helpers.defer import DeferredTask
 from typing import Callable
 
+GREEK_ALPHABET = {
+    0: 'Alpha', 1: 'Beta', 2: 'Gamma', 3: 'Delta', 4: 'Epsilon',
+    5: 'Zeta', 6: 'Eta', 7: 'Theta', 8: 'Iota', 9: 'Kappa',
+    10: 'Lambda', 11: 'Mu', 12: 'Nu', 13: 'Xi', 14: 'Omicron',
+    15: 'Pi', 16: 'Rho', 17: 'Sigma', 18: 'Tau', 19: 'Upsilon',
+    20: 'Phi', 21: 'Chi', 22: 'Psi', 23: 'Omega'
+}
+
 
 class AgentContext:
 
@@ -31,7 +39,7 @@ class AgentContext:
         config: "AgentConfig",
         id: str | None = None,
         name: str | None = None,
-        agent0: "Agent|None" = None,
+        kodeus: "Agent|None" = None,
         log: Log.Log | None = None,
         paused: bool = False,
         streaming_agent: "Agent|None" = None,
@@ -41,7 +49,7 @@ class AgentContext:
         self.name = name
         self.config = config
         self.log = log or Log.Log()
-        self.agent0 = agent0 or Agent(0, self.config, self)
+        self.kodeus = kodeus or Agent(0, self.config, self)
         self.paused = paused
         self.streaming_agent = streaming_agent
         self.task: DeferredTask | None = None
@@ -77,7 +85,7 @@ class AgentContext:
     def reset(self):
         self.kill_process()
         self.log.reset()
-        self.agent0 = Agent(0, self.config, self)
+        self.kodeus = Agent(0, self.config, self)
         self.streaming_agent = None
         self.paused = False
 
@@ -87,7 +95,7 @@ class AgentContext:
         if self.streaming_agent:
             current_agent = self.streaming_agent
         else:
-            current_agent = self.agent0
+            current_agent = self.kodeus
 
         self.task =self.run_task(current_agent.monologue)
         return self.task
@@ -98,7 +106,7 @@ class AgentContext:
         if self.streaming_agent:
             current_agent = self.streaming_agent
         else:
-            current_agent = self.agent0
+            current_agent = self.kodeus
 
         if self.task and self.task.is_alive():
             # set intervention messages to agent(s):
@@ -165,7 +173,7 @@ class AgentConfig:
     memory_subdir: str = ""
     knowledge_subdirs: list[str] = field(default_factory=lambda: ["default", "custom"])
     code_exec_docker_enabled: bool = False
-    code_exec_docker_name: str = "A0-dev"
+    code_exec_docker_name: str = "Kodeus-dev"
     code_exec_docker_image: str = "frdel/agent-zero-run:development"
     code_exec_docker_ports: dict[str, int] = field(
         default_factory=lambda: {"22/tcp": 55022, "80/tcp": 55080}
@@ -237,7 +245,7 @@ class Agent:
 
         # non-config vars
         self.number = number
-        self.agent_name = f"Agent {self.number}"
+        self.agent_name = f"Kodeus {GREEK_ALPHABET[self.number]}"
 
         self.history = history.History(self)
         self.last_user_message: history.Message | None = None

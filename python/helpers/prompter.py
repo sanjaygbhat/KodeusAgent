@@ -13,7 +13,7 @@ payload = json.dumps({
   "context": "924ba640-cca5-434e-814d-fa3062691abc",
   "message_id": ""
 })
-headers = {"Content-Type": "application/json",
+headers = {
   'Content-Type': 'application/json'
 }
 

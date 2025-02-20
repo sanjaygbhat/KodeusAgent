@@ -110,7 +110,7 @@ def convert_out(settings: Settings) -> SettingsOutput:
         {
             "id": "chat_model_provider",
             "title": "Chat model provider",
-            "description": "Select provider for main chat model used by Agent Zero",
+            "description": "Select provider for main chat model used by Kodeus",
             "type": "select",
             "value": settings["chat_model_provider"],
             "options": [{"value": p.name, "label": p.value} for p in ModelProvider],
@@ -192,7 +192,7 @@ def convert_out(settings: Settings) -> SettingsOutput:
     chat_model_section: SettingsSection = {
         "id": "chat_model",
         "title": "Chat Model",
-        "description": "Selection and settings for main chat model used by Agent Zero",
+        "description": "Selection and settings for main chat model used by Kodeus",
         "fields": chat_model_fields,
     }
 
@@ -320,7 +320,7 @@ def convert_out(settings: Settings) -> SettingsOutput:
     embed_model_section: SettingsSection = {
         "id": "embed_model",
         "title": "Embedding Model",
-        "description": "Settings for the embedding model used by Agent Zero.",
+        "description": "Settings for the embedding model used by Kodeus.",
         "fields": embed_model_fields,
     }
 
@@ -369,7 +369,7 @@ def convert_out(settings: Settings) -> SettingsOutput:
     browser_model_section: SettingsSection = {
         "id": "browser_model",
         "title": "Web Browser Model",
-        "description": "Settings for the web browser model. Agent Zero uses <a href='https://github.com/browser-use/browser-use' target='_blank'>browser-use</a> agentic framework to handle web interactions.",
+        "description": "Settings for the web browser model. Kodeus uses <a href='https://github.com/browser-use/browser-use' target='_blank'>browser-use</a> agentic framework to handle web interactions.",
         "fields": browser_model_fields,
     }
 
@@ -433,7 +433,7 @@ def convert_out(settings: Settings) -> SettingsOutput:
     auth_section: SettingsSection = {
         "id": "auth",
         "title": "Authentication",
-        "description": "Settings for authentication to use Agent Zero Web UI.",
+        "description": "Settings for authentication to use Kodeus Web UI.",
         "fields": auth_fields,
     }
 
@@ -462,7 +462,7 @@ def convert_out(settings: Settings) -> SettingsOutput:
     api_keys_section: SettingsSection = {
         "id": "api_keys",
         "title": "API Keys",
-        "description": "API keys for model providers and services used by Agent Zero.",
+        "description": "API keys for model providers and services used by Kodeus.",
         "fields": api_keys_fields,
     }
 
@@ -525,7 +525,7 @@ def convert_out(settings: Settings) -> SettingsOutput:
         #     {
         #         "id": "rfc_auto_docker",
         #         "title": "RFC Auto Docker Management",
-        #         "description": "Automatically create dockerized instance of A0 for RFCs using this instance's code base and, settings and .env.",
+        #         "description": "Automatically create dockerized instance of Kodeus for RFCs using this instance's code base and, settings and .env.",
         #         "type": "text",
         #         "value": settings["rfc_auto_docker"],
         #     }
@@ -535,7 +535,7 @@ def convert_out(settings: Settings) -> SettingsOutput:
             {
                 "id": "rfc_url",
                 "title": "RFC Destination URL",
-                "description": "URL of dockerized A0 instance for remote function calls. Do not specify port here.",
+                "description": "URL of dockerized Kodeus instance for remote function calls. Do not specify port here.",
                 "type": "text",
                 "value": settings["rfc_url"],
             }
@@ -560,7 +560,7 @@ def convert_out(settings: Settings) -> SettingsOutput:
             {
                 "id": "rfc_port_http",
                 "title": "RFC HTTP port",
-                "description": "HTTP port for dockerized instance of A0.",
+                "description": "HTTP port for dockerized instance of Kodeus.",
                 "type": "text",
                 "value": settings["rfc_port_http"],
             }
@@ -570,7 +570,7 @@ def convert_out(settings: Settings) -> SettingsOutput:
             {
                 "id": "rfc_port_ssh",
                 "title": "RFC SSH port",
-                "description": "SSH port for dockerized instance of A0.",
+                "description": "SSH port for dockerized instance of Kodeus.",
                 "type": "text",
                 "value": settings["rfc_port_ssh"],
             }
@@ -579,7 +579,7 @@ def convert_out(settings: Settings) -> SettingsOutput:
     dev_section: SettingsSection = {
         "id": "dev",
         "title": "Development",
-        "description": "Parameters for A0 framework development. RFCs (remote function calls) are used to call functions on another A0 instance. You can develop and debug A0 natively on your local system while redirecting some functions to A0 instance in docker. This is crucial for development as A0 needs to run in standardized environment to support all features.",
+        "description": "Parameters for Kodeus framework development. RFCs (remote function calls) are used to call functions on another Kodeus instance. You can develop and debug Kodeus natively on your local system while redirecting some functions to Kodeus instance in docker. This is crucial for development as Kodeus needs to run in standardized environment to support all features.",
         "fields": dev_fields,
     }
 
@@ -826,7 +826,7 @@ def _apply_settings():
         for ctx in AgentContext._contexts.values():
             ctx.config = initialize()  # reinitialize context config with new settings
             # apply config to agents
-            agent = ctx.agent0
+            agent = ctx.kodeus
             while agent:
                 agent.config = ctx.config
                 agent = agent.get_data(agent.DATA_NAME_SUBORDINATE)

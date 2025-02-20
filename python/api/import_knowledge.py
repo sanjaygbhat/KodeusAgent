@@ -19,7 +19,7 @@ class ImportKnowledge(ApiHandler):
         context = self.get_context(ctxid)
 
         file_list = request.files.getlist("files[]")
-        KNOWLEDGE_FOLDER = files.get_abs_path(memory.get_custom_knowledge_subdir_abs(context.agent0),"main")
+        KNOWLEDGE_FOLDER = files.get_abs_path(memory.get_custom_knowledge_subdir_abs(context.kodeus),"main")
 
         saved_filenames = []
 
@@ -30,7 +30,7 @@ class ImportKnowledge(ApiHandler):
                 saved_filenames.append(filename)
 
         #reload memory to re-import knowledge
-        await memory.Memory.reload(context.agent0)
+        await memory.Memory.reload(context.kodeus)
         context.log.set_initial_progress()
 
         return {
