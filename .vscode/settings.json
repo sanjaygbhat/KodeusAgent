@@ -2,4 +2,5 @@
     "python.analysis.typeCheckingMode": "standard",
     "windsurfPyright.analysis.diagnosticMode": "workspace",
     "windsurfPyright.analysis.typeCheckingMode": "standard",
+    "python.analysis.autoImportCompletions": true,
 }

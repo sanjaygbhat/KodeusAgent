@@ -6,3 +6,5 @@
 {{ include '/a0/instruments/default/task_scheduler/task_scheduler.md' }}
 
 {{ include '/a0/instruments/default/recurring_task_scheduler/recurring_task_scheduler.md' }}
+
+{{ include '/a0/instruments/default/discord_bot/discord_bot.md' }}
