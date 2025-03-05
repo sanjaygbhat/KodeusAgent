@@ -12,14 +12,19 @@ NEVER SEND TEST MESSAGES
 3. The bot will connect to Discord and print confirmation. If not connected, terminate saying not connected.
 
 4. Bot will be connected asynchronously. Kodeus will answer. Answer strictly in this json format:
-  a. Do you respond?
-    - yes:
+  a. Do you respond
+    - if you have to respond:
         {
           'resp': 1,
           'text': response,
         }
-    - no:
+    - else if you don't have to respond:
         {
           'resp': 0,
           'text': '',
+        }
+    - else if you have to ban the person 
+        {
+          'resp': 2,
+          'text': reason for ban,
         }
