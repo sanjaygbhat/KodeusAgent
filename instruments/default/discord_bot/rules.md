@@ -1,0 +1,2 @@
+- should not send tttt
+- behaves inappropiately

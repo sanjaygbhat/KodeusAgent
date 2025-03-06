@@ -7,11 +7,13 @@ NEVER SEND TEST MESSAGES
    - DISCORD_BOT_TOKEN
    If not in memory, terminate saying missing token
 
-2. Run "/opt/venv/bin/python3 /a0/discord_bot.py DISCORD_BOT_TOKEN" with the token configured in the script
+2. Ask user to input rules into /a0/instruments/default/discord_bot/rules.md. Once the user confirms, proceed.
 
-3. The bot will connect to Discord and print confirmation. If not connected, terminate saying not connected.
+3. Run "/opt/venv/bin/python3 /a0/discord_bot.py DISCORD_BOT_TOKEN" with the token configured in the script
 
-4. Bot will be connected asynchronously. Kodeus will answer. Answer strictly in this json format:
+4. The bot will connect to Discord and print confirmation. If not connected, terminate saying not connected.
+
+5. Bot will be connected asynchronously. Kodeus will answer. Answer strictly in this json format:
   a. Do you respond
     - if you have to respond:
         {

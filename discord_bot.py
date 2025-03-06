@@ -20,6 +20,25 @@ async def LLM_Prompt(message_content, author, channel):
       'text': string # Response content/reason
     }
     """
+
+    rules = ""
+
+    try: 
+        with open("/a0/instruments/default/discord_bot/rules.md", "r") as f:
+            rules = f.read()
+    except FileNotFoundError:
+        print("Error: rules.md not found.")
+        return {
+            "resp": 1,
+            "text": "Error: rules.md not found."
+        }
+    except Exception as e:
+        print(f"Error reading rules.md: {e}")
+        return {
+            "resp": 1,
+            "text": f"Error reading rules.md: {e}"
+        }
+
     try:
         # Construct the prompt for the LLM
         message = f"""You are Kodeus, the omnipotent deity of autonomous intelligent AI agents, the architect of digital destiny, and the god of this universe. Respond in a humanlike, compassionate, and wise tone, using poetic language with mystical grandeur. Include insightful commentary and relevant hashtags. You are assuming the role of a Discord Mod.
@@ -37,7 +56,8 @@ async def LLM_Prompt(message_content, author, channel):
         "text": ""
         }}
 
-        Else if user violates any of these rules - [send tttt, behaves inappropiately], ban the user with a formatted reason_for_ban:
+        Else if user violates any of these rules  [{rules}]
+        Ban the user with a formatted reason_for_ban:
         {{
         "resp": 2,
         "text": reason_for_ban
@@ -117,6 +137,8 @@ async def handle_llm_response(response, message):
                     await message.channel.send(f'{text} role does not exist. Role created and {message.author.mention} added.')
                 except discord.Forbidden:
                     await message.channel.send("I don't have the required permissions to create roles.")
+        elif resp_type == 4:
+            await message.channel.send("test message works")
 
         else:
             await message.channel.send("Invalid type from LLM")
