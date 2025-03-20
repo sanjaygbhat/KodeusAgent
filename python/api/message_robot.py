@@ -8,6 +8,7 @@ import os
 from werkzeug.utils import secure_filename
 from python.helpers.defer import DeferredTask
 from python.helpers.print_style import PrintStyle
+import json
 
 
 class MessageRobot(ApiHandler):
@@ -25,46 +26,19 @@ class MessageRobot(ApiHandler):
 
     async def respond(self, task: DeferredTask, context: AgentContext):
         result = await task.result()  # type: ignore
-
-        a = {
-                "id": "chatcmpl-B9MBs8CjcvOU2jLn4n570S5qMJKcT",
-                "object": "chat.completion",
-                "created": int(time.time()),
-                "model": "gpt-4o-2024-08-06",
-                "choices": [
-                    {
-                        "index": 0,
-                        "message": {
-                            "role": "assistant",
-                            "content": result,
-                            "refusal": None,
-                            "annotations": []
-                        },
-                        "logprobs": None,
-                        "finish_reason": "stop"
-                    }
-                ],
-                "usage": {
-                    "prompt_tokens": 0,
-                    "completion_tokens": 0,
-                    "total_tokens": 0,
-                    "prompt_tokens_details": {
-                    "cached_tokens": 0,
-                    "audio_tokens": 0
-                    },
-                    "completion_tokens_details": {
-                    "reasoning_tokens": 0,
-                    "audio_tokens": 0,
-                    "accepted_prediction_tokens": 0,
-                    "rejected_prediction_tokens": 0
-                    }
-                },
-                "service_tier": "default"
-                }
-
-        return a
         
+        def event_stream():
 
+            def generate():
+                # Convert the ChatCompletionChunk to a dictionary before JSON serialization
+                chunk_dict = {"id": "chatcmpl-BD3ws7Zvr1Emdi2d1pfoi7s5UcLHb", "choices": [{"delta": {"content": result, "function_call": None, "refusal": None, "role": None, "tool_calls": None}, "finish_reason": None, "index": 0, "logprobs": None}], "created": int(time.time()), "model": "gpt-4o-mini-2024-07-18", "object": "chat.completion.chunk", "service_tier": "default", "system_fingerprint": "fp_b8bc95a0ac", "usage": None}
+                yield f"data: {json.dumps(chunk_dict)}\n\n"
+                yield "data: [DONE]\n\n"
+            
+            return Response(generate(), content_type='text/event-stream')
+        
+        return event_stream()
+            
 
     async def communicate(self, input: dict, request: Request):
         # Handle both JSON and multipart/form-data

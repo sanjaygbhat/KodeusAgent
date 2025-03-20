@@ -108,6 +108,8 @@ def run():
 
     def register_api_handler(app, handler: type[ApiHandler]):
         name = handler.__module__.split(".")[-1]
+        if name == 'message_robot':
+            name = '/message_robot/chat/completions'
         instance = handler(app, lock)
 
         @requires_auth
