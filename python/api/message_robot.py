@@ -9,15 +9,26 @@ from werkzeug.utils import secure_filename
 from python.helpers.defer import DeferredTask
 from python.helpers.print_style import PrintStyle
 import json
-
+import uuid
 
 class MessageRobot(ApiHandler):
     async def process(self, input: dict, request: Request) -> dict | Response:
 
+    #   customLlmExtraBody: {
+    #     extraBody: {
+    #       chatId: chatId,
+    #     },
+    #   },
+
+        systemPrompt = "You are a voice assistant that responds concisely and clearly. Keep answers short and direct. Ignore ellipses ('...') and do not acknowledge them. Prioritize efficiency and relevance in every response."
+
+        chatId = input.get("customLlmExtraBody", "").get("chatId","")
+        print(chatId)
+
         msgs = input.get("messages", "")
         request = {
             "text":msgs[len(msgs)-1]['content'],
-            "context":"",
+            "context":chatId,
             "message_id":"",
         }
 
