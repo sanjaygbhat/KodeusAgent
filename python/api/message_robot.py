@@ -22,8 +22,9 @@ class MessageRobot(ApiHandler):
 
         systemPrompt = "You are a voice assistant that responds concisely and clearly. Keep answers short and direct. Ignore ellipses ('...') and do not acknowledge them. Prioritize efficiency and relevance in every response."
 
-        chatId = input.get("customLlmExtraBody", "").get("chatId","")
-        print(chatId)
+        # chatId = input.get("customLlmExtraBody", "").get("chatId","")
+        # print(chatId)
+        chatId = "a1be679f-fdf8-4077-a1cb-0409bdb9eaca"
 
         msgs = input.get("messages", "")
         request = {
@@ -49,7 +50,7 @@ class MessageRobot(ApiHandler):
             return Response(generate(), content_type='text/event-stream')
         
         return event_stream()
-            
+
 
     async def communicate(self, input: dict, request: Request):
         # Handle both JSON and multipart/form-data
